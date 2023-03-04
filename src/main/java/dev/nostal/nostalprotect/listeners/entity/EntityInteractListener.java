@@ -29,6 +29,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 import static dev.nostal.nostalprotect.utils.PermissionUtility.playerHasPermission;
@@ -47,6 +48,19 @@ public class EntityInteractListener implements Listener {
         if (entity instanceof ItemFrame && !((ItemFrame)event.getRightClicked()).getItem().getType().equals(Material.AIR)){
             permission = "entity." + entityType.name() + ".rotate";
         }
+
+        if (!playerHasPermission(permission, player)) {
+            event.setCancelled(true);
+        }
+
+    }
+
+    @EventHandler
+    public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent event) {
+
+        Player player = event.getPlayer();
+        EntityType entityType = event.getRightClicked().getType();
+        String permission = "entity." + entityType.name() + ".interact";
 
         if (!playerHasPermission(permission, player)) {
             event.setCancelled(true);

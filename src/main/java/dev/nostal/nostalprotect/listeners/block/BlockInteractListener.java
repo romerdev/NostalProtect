@@ -25,6 +25,7 @@
 
 package dev.nostal.nostalprotect.listeners.block;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,6 +34,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import static dev.nostal.nostalprotect.utils.PermissionUtility.playerHasPermission;
+import static dev.nostal.nostalprotect.utils.RegionUtility.playerCanModifyBlockAtLocation;
 
 public class BlockInteractListener implements Listener {
 
@@ -50,6 +52,7 @@ public class BlockInteractListener implements Listener {
         Player player = event.getPlayer();
         Material material = event.getClickedBlock().getType();
         String permission = "block." + material.name() + ".interact";
+        Location location = event.getClickedBlock().getLocation();
 
         // Excluding block interacting for stairs & fences.
         if (material.name().endsWith("STAIRS") || material.name().endsWith("FENCE")) {
@@ -57,6 +60,10 @@ public class BlockInteractListener implements Listener {
         }
 
         if (!playerHasPermission(permission, player)) {
+            event.setCancelled(true);
+        }
+
+        if (!playerCanModifyBlockAtLocation(location, player)) {
             event.setCancelled(true);
         }
 

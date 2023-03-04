@@ -4,6 +4,7 @@ main: dev.nostal.nostalprotect.NostalProtect
 api-version: 1.19
 authors: [ Meffu ]
 description: Protect your world with easy to use permissions
+depend: [WorldGuard]
 commands:
   nostalprotect:
     description: Display the help command of NostalProtect.

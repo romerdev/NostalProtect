@@ -30,6 +30,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPlaceEvent;
+import org.bukkit.event.hanging.HangingPlaceEvent;
 
 import static dev.nostal.nostalprotect.utils.PermissionUtility.playerHasPermission;
 
@@ -44,6 +45,23 @@ public class EntityPlaceListener implements Listener {
 
         Player player = event.getPlayer();
         EntityType entity = event.getEntityType();
+        String permission = "entity." + entity.name() + ".place";
+
+        if (!playerHasPermission(permission, player)) {
+            event.setCancelled(true);
+        }
+
+    }
+
+    @EventHandler
+    public void onPlayerHangingPlace(HangingPlaceEvent event) {
+
+        if (event.getPlayer() == null) {
+            return;
+        }
+
+        Player player = event.getPlayer();
+        EntityType entity = event.getEntity().getType();
         String permission = "entity." + entity.name() + ".place";
 
         if (!playerHasPermission(permission, player)) {

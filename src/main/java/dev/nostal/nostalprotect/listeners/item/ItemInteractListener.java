@@ -26,6 +26,7 @@
 package dev.nostal.nostalprotect.listeners.item;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -61,6 +62,24 @@ public class ItemInteractListener implements Listener {
             case SALMON_BUCKET:
             case TADPOLE_BUCKET:
             case TROPICAL_FISH_BUCKET:
+            case ITEM_FRAME:
+            case GLOW_ITEM_FRAME:
+            case ARMOR_STAND:
+            case PAINTING:
+            case ACACIA_BOAT:
+            case ACACIA_CHEST_BOAT:
+            case BIRCH_BOAT:
+            case BIRCH_CHEST_BOAT:
+            case DARK_OAK_BOAT:
+            case DARK_OAK_CHEST_BOAT:
+            case JUNGLE_BOAT:
+            case JUNGLE_CHEST_BOAT:
+            case MANGROVE_BOAT:
+            case MANGROVE_CHEST_BOAT:
+            case OAK_BOAT:
+            case OAK_CHEST_BOAT:
+            case SPRUCE_BOAT:
+            case SPRUCE_CHEST_BOAT:
                break;
             default:
                 if (!playerHasPermission(permission, player)) {
