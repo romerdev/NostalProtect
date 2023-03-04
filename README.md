@@ -9,8 +9,8 @@
  
  I'm currently adding a Worldguard integration that will allow for the following permissions:
  
- - np.block.STONE.place.own  | Allow this action only on regions where the player is a member or owner.
- - np.block.STONE.place.global | Allow this action only on global region.
+ - np.block.STONE.place.own  | Allow this action on regions where the player is a member or owner.
+ - np.block.STONE.place.global | Allow this action on global region.
 
 ## Installation
 Place this plugin and permission manager, such as Luckperms, in your plugin folder and (re)start the server. Your world is now protected! That was easy, huh?
