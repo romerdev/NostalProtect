@@ -22,7 +22,7 @@ public class PlayerActionUtility {
             return false;
         }
 
-        if (!playerCanModifyBlockAtLocation(location, player)) {
+        if (plugin.getConfig().getBoolean("useWorldGuardRegions") && !playerCanModifyBlockAtLocation(location, player)) {
             return false;
         }
 

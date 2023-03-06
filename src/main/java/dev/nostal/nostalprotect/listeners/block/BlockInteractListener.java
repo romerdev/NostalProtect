@@ -40,7 +40,12 @@ public class BlockInteractListener implements Listener {
 
     @EventHandler
     public void onPlayerBlockInteract(PlayerInteractEvent event) {
-        if (!Objects.requireNonNull(event.getClickedBlock()).getType().isInteractable() && !(event.getAction().equals(Action.PHYSICAL))) {
+
+        if (event.getClickedBlock() == null) {
+            return;
+        }
+
+        if (!event.getClickedBlock().getType().isInteractable() && !(event.getAction().equals(Action.PHYSICAL))) {
             return;
         }
 
