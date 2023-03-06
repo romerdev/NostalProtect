@@ -38,4 +38,4 @@ Visit the [Permissions page](https://github.com/romerdev/NostalProtect/wiki/Perm
  
  - `np.<type>.<material>.<action>.own`: Allow this action on regions where the player is a member or owner.
  - `np.<type>.<material>.<action>.global`: Allow this action on global region.
- - `np.<type>.<material>.<action>.<region>`: Allow this action on a specific region
+ - `np.<type>.<material>.<action>.<region>`: Allow this action on a specific region (this will bypass region owner- or membership for this player).
