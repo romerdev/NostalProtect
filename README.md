@@ -5,7 +5,7 @@
  - np.item.GRASS.pickup
  - np.entity.ARMOR_STAND.interact
  
- ### WIP
+ ## WorldGuard Region integration
  
  I'm currently adding a Worldguard integration that will allow region based protection permissions:
  
@@ -14,7 +14,7 @@
  - `np.<type>.<material>.<action>.<region>`: Allow this action on a specific region
 
 ## Installation
-Place this plugin and permission manager, such as Luckperms, in your plugin folder and (re)start the server. Your world is now protected! That was easy, huh?
+Place this plugin and a permission manager, such as [Luckperms](https://luckperms.net), in your plugin folder and (re)start the server. Your world is now protected! That was easy, huh?
 
 Now you can give groups or players the permissions you want.
 
