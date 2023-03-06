@@ -9,9 +9,9 @@
  
  I'm currently adding a Worldguard integration that will allow region based protection permissions:
  
- - `np.<type>.<material>.<action>.*own* `: Allow this action on regions where the player is a member or owner.
- - `np.<type>.<material>.<action>.*global*`: Allow this action on global region.
- - `np.<type>.<material>.<action>.*<region>*`: Allow this action on a specific region
+ - `np.<type>.<material>.<action>.**own** `: Allow this action on regions where the player is a member or owner.
+ - `np.<type>.<material>.<action>.**global**`: Allow this action on global region.
+ - `np.<type>.<material>.<action>.**<region>**`: Allow this action on a specific region
 
 ## Installation
 Place this plugin and permission manager, such as Luckperms, in your plugin folder and (re)start the server. Your world is now protected! That was easy, huh?
