@@ -25,7 +25,7 @@ Now you can give groups or players the permissions you want.
 - Entity destroy: `np.entity.<type>.break`
 - Entity interact: `np.entity.<type>.interact`
 - Entity damage: `np.entity.<type>.damage`
-- Item interact: `np.item.<material>.interact`
+- Item use: `np.item.<material>.use`
 - Item drop: `np.item.<material>.drop`
 - Item pickup: `np.item.<material>.pickup`
 
