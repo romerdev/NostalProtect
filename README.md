@@ -6,7 +6,7 @@
  - `np.item.GRASS.pickup`
  - `np.entity.ARMOR_STAND.interact`
  
- And with the [Worldguard integration](https://github.com/romerdev/NostalProtect#worldguard-region-integration) you could even specify the region.
+ And with the [Worldguard integration](https://github.com/romerdev/NostalProtect/wiki/WorldGuard-integration) you could even specify the region.
 
 
 ## Installation
