@@ -34,7 +34,7 @@ Visit the [Permissions page](https://github.com/romerdev/NostalProtect/wiki/Perm
 
  ## WorldGuard Region integration
  
- I'm currently adding a Worldguard integration that will allow region based protection permissions:
+ I'm currently adding a [Worldguard integration](https://github.com/romerdev/NostalProtect/wiki/WorldGuard-integration) that will allow region based protection permissions:
  
  - `np.<type>.<material>.<action>.own `: Allow this action on regions where the player is a member or owner.
  - `np.<type>.<material>.<action>.global`: Allow this action on global region.
