@@ -32,18 +32,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import static dev.nostal.nostalprotect.utils.PermissionUtility.playerHasPermission;
-import static dev.nostal.nostalprotect.utils.RegionUtility.playerCanModifyBlockAtLocation;
+import java.util.Objects;
+
+import static dev.nostal.nostalprotect.utils.PlayerActionUtility.playerCanPerformAction;
 
 public class BlockInteractListener implements Listener {
 
     @EventHandler
     public void onPlayerBlockInteract(PlayerInteractEvent event) {
-        if (event.getClickedBlock() == null) {
-            return;
-        }
-
-        if (!event.getClickedBlock().getType().isInteractable() && !(event.getAction().equals(Action.PHYSICAL))) {
+        if (!Objects.requireNonNull(event.getClickedBlock()).getType().isInteractable() && !(event.getAction().equals(Action.PHYSICAL))) {
             return;
         }
 
@@ -57,11 +54,7 @@ public class BlockInteractListener implements Listener {
             return;
         }
 
-        if (!playerHasPermission(permission, player)) {
-            event.setCancelled(true);
-        }
-
-        if (!playerCanModifyBlockAtLocation(location, player)) {
+        if (!playerCanPerformAction(player, permission, location, material, false)) {
             event.setCancelled(true);
         }
     }

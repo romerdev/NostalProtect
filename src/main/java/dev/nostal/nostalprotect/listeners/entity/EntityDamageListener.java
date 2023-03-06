@@ -25,14 +25,14 @@
 package dev.nostal.nostalprotect.listeners.entity;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import static dev.nostal.nostalprotect.utils.PermissionUtility.playerHasPermission;
-import static dev.nostal.nostalprotect.utils.RegionUtility.playerCanModifyBlockAtLocation;
+import static dev.nostal.nostalprotect.utils.PlayerActionUtility.playerCanPerformAction;
 
 public class EntityDamageListener implements Listener {
 
@@ -46,12 +46,9 @@ public class EntityDamageListener implements Listener {
         EntityType entity = event.getEntityType();
         String permission = "entity." + entity.name() + ".damage";
         Location location = event.getEntity().getLocation();
+        Material materialToRemove = player.getActiveItem().getType();
 
-        if (!playerHasPermission(permission, player)) {
-            event.setCancelled(true);
-        }
-
-        if (!playerCanModifyBlockAtLocation(location, player)) {
+        if (!playerCanPerformAction(player, permission, location, materialToRemove, false)) {
             event.setCancelled(true);
         }
     }

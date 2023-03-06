@@ -24,13 +24,14 @@
 
 package dev.nostal.nostalprotect.listeners.item;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import static dev.nostal.nostalprotect.utils.PermissionUtility.playerHasPermission;
+import static dev.nostal.nostalprotect.utils.PlayerActionUtility.playerCanPerformAction;
 
 public class ItemInteractListener implements Listener {
 
@@ -79,9 +80,11 @@ public class ItemInteractListener implements Listener {
             case SPRUCE_CHEST_BOAT:
                break;
             default:
-                if (!playerHasPermission(permission, player)) {
+                //TEMPORARY
+                Location location = player.getLocation();
+
+                if (!playerCanPerformAction(player, permission, location, material, true)) {
                     event.setCancelled(true);
-                    player.getInventory().remove(material);
                 }
         }
     }

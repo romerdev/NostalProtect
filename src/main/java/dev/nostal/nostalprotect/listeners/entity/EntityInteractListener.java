@@ -32,8 +32,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
-import static dev.nostal.nostalprotect.utils.PermissionUtility.playerHasPermission;
-import static dev.nostal.nostalprotect.utils.RegionUtility.playerCanModifyBlockAtLocation;
+import static dev.nostal.nostalprotect.utils.PlayerActionUtility.playerCanPerformAction;
 
 public class EntityInteractListener implements Listener {
 
@@ -44,17 +43,15 @@ public class EntityInteractListener implements Listener {
         EntityType entityType = event.getRightClicked().getType();
         String permission = "entity." + entityType.name() + ".interact";
         Location location = event.getRightClicked().getLocation();
+        Material materialToRemove = player.getActiveItem().getType();
 
         // ItemFrame rotate event
         if (entity instanceof ItemFrame && !((ItemFrame)event.getRightClicked()).getItem().getType().equals(Material.AIR)){
             permission = "entity." + entityType.name() + ".rotate";
         }
 
-        if (!playerHasPermission(permission, player)) {
-            event.setCancelled(true);
-        }
 
-        if (!playerCanModifyBlockAtLocation(location, player)) {
+        if (!playerCanPerformAction(player, permission, location, materialToRemove, false)) {
             event.setCancelled(true);
         }
     }
@@ -65,12 +62,9 @@ public class EntityInteractListener implements Listener {
         EntityType entityType = event.getRightClicked().getType();
         String permission = "entity." + entityType.name() + ".interact";
         Location location = event.getRightClicked().getLocation();
+        Material materialToRemove = player.getActiveItem().getType();
 
-        if (!playerHasPermission(permission, player)) {
-            event.setCancelled(true);
-        }
-
-        if (!playerCanModifyBlockAtLocation(location, player)) {
+        if (!playerCanPerformAction(player, permission, location, materialToRemove, false)) {
             event.setCancelled(true);
         }
     }

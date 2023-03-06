@@ -44,12 +44,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
 
+import static dev.nostal.nostalprotect.utils.ConfigUtility.initConfig;
+
 public final class NostalProtect extends JavaPlugin {
 
     @Override
     public void onEnable() {
         registerListeners();
         registerCommands();
+        initConfig();
     }
 
     private void registerListeners() {

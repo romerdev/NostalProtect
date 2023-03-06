@@ -33,23 +33,18 @@ import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketEntityEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 
-import static dev.nostal.nostalprotect.utils.PermissionUtility.playerHasPermission;
-import static dev.nostal.nostalprotect.utils.RegionUtility.playerCanModifyBlockAtLocation;
+import static dev.nostal.nostalprotect.utils.PlayerActionUtility.playerCanPerformAction;
 
 public class BucketInteractListener implements Listener {
 
     @EventHandler
     public void onPlayerBucketFill(PlayerBucketFillEvent event) {
         Player player = event.getPlayer();
-        Material material = event.getBucket();
-        String permission = "item." + material.name() + ".fill";
+        Material bucket = event.getBucket();
+        String permission = "item." + bucket.name() + ".fill";
         Location location = event.getBlock().getLocation();
 
-        if (!playerHasPermission(permission, player)) {
-            event.setCancelled(true);
-        }
-
-        if (!playerCanModifyBlockAtLocation(location, player)) {
+        if (!playerCanPerformAction(player, permission, location, bucket, true)) {
             event.setCancelled(true);
         }
     }
@@ -71,11 +66,7 @@ public class BucketInteractListener implements Listener {
                 permission = "item." + bucket.name() + ".release";
         }
 
-        if (!playerHasPermission(permission, player)) {
-            event.setCancelled(true);
-        }
-
-        if (!playerCanModifyBlockAtLocation(location, player)) {
+        if (!playerCanPerformAction(player, permission, location, bucket, true)) {
             event.setCancelled(true);
         }
     }
@@ -83,15 +74,11 @@ public class BucketInteractListener implements Listener {
     @EventHandler
     public void onPlayerBucketCapture(PlayerBucketEntityEvent event) {
         Player player = event.getPlayer();
-        Material material = event.getOriginalBucket().getType();
-        String permission = "item." + material.name() + ".capture";
+        Material bucket = event.getOriginalBucket().getType();
+        String permission = "item." + bucket.name() + ".capture";
         Location location = event.getEntity().getLocation();
 
-        if (!playerHasPermission(permission, player)) {
-            event.setCancelled(true);
-        }
-
-        if (!playerCanModifyBlockAtLocation(location, player)) {
+        if (!playerCanPerformAction(player, permission, location, bucket, true)) {
             event.setCancelled(true);
         }
     }

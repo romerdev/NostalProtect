@@ -25,6 +25,7 @@
 package dev.nostal.nostalprotect.listeners.entity;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,8 +33,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPlaceEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 
-import static dev.nostal.nostalprotect.utils.PermissionUtility.playerHasPermission;
-import static dev.nostal.nostalprotect.utils.RegionUtility.playerCanModifyBlockAtLocation;
+import static dev.nostal.nostalprotect.utils.PlayerActionUtility.playerCanPerformAction;
 
 public class EntityPlaceListener implements Listener {
 
@@ -47,12 +47,9 @@ public class EntityPlaceListener implements Listener {
         EntityType entity = event.getEntityType();
         String permission = "entity." + entity.name() + ".place";
         Location location = event.getBlock().getLocation();
+        Material materialToRemove = player.getActiveItem().getType();
 
-        if (!playerHasPermission(permission, player)) {
-            event.setCancelled(true);
-        }
-
-        if (!playerCanModifyBlockAtLocation(location, player)) {
+        if (!playerCanPerformAction(player, permission, location, materialToRemove, true)) {
             event.setCancelled(true);
         }
     }
@@ -67,12 +64,9 @@ public class EntityPlaceListener implements Listener {
         EntityType entity = event.getEntity().getType();
         String permission = "entity." + entity.name() + ".place";
         Location location = event.getBlock().getLocation();
+        Material materialToRemove = player.getActiveItem().getType();
 
-        if (!playerHasPermission(permission, player)) {
-            event.setCancelled(true);
-        }
-
-        if (!playerCanModifyBlockAtLocation(location, player)) {
+        if (!playerCanPerformAction(player, permission, location, materialToRemove, true)) {
             event.setCancelled(true);
         }
     }

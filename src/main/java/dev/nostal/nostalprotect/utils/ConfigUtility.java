@@ -22,34 +22,23 @@
  *  SOFTWARE.
  */
 
-package dev.nostal.nostalprotect.listeners.block;
+package dev.nostal.nostalprotect.utils;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPlaceEvent;
+import dev.nostal.nostalprotect.NostalProtect;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import static dev.nostal.nostalprotect.utils.PlayerActionUtility.playerCanPerformAction;
+public class ConfigUtility {
 
-public class BlockPlaceListener implements Listener {
+    public static void initConfig() {
+        JavaPlugin plugin = NostalProtect.getPlugin(NostalProtect.class);
 
-    @EventHandler
-    public void onPlayerBlockPlace(BlockPlaceEvent event) {
-        Player player = event.getPlayer();
-        Material material = event.getBlock().getType();
-        String permission = "block." + material.name() + ".place";
-        Location location = event.getBlock().getLocation();
-        Material materialToRemove = material;
+        FileConfiguration config = plugin.getConfig();
+        config.addDefault("removeDisallowedItems", false);
+        config.addDefault("useWorldGuardRegions", false);
+        config.options().copyDefaults(true);
 
-        if (material == Material.POWDER_SNOW) {
-            materialToRemove = Material.POWDER_SNOW_BUCKET;
-        }
-
-        if (!playerCanPerformAction(player, permission, location, materialToRemove, true)) {
-            event.setCancelled(true);
-        }
+        plugin.saveConfig();
     }
 
 }
