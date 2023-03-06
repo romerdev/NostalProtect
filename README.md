@@ -16,13 +16,15 @@ Now you can give groups or players the permissions you want.
 ## Permission usage
 
 - Block place: `np.block.<material>.place`
-- Block break: `np.block.<material>.remove`
+- Block break: `np.block.<material>.break`
 - Block interact: `np.block.<material>.interact`
 - Entity spawn: `np.entity.<type>.place`
-- Entity destroy: `np.entity.<type>.remove`
+- Entity destroy: `np.entity.<type>.break`
 - Entity interact: `np.entity.<type>.interact`
 - Entity damage: `np.entity.<type>.damage`
-- Item use: `np.item.<material>.use`
+- Item interact: `np.item.<material>.interact`
+- Item drop: `np.item.<material>.drop`
+- Item pickup: `np.item.<material>.pickup`
 
 
  ## WorldGuard Region integration
