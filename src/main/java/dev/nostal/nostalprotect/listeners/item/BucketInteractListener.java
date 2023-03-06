@@ -25,6 +25,7 @@
 
 package dev.nostal.nostalprotect.listeners.item;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,28 +35,32 @@ import org.bukkit.event.player.PlayerBucketEntityEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 
 import static dev.nostal.nostalprotect.utils.PermissionUtility.playerHasPermission;
+import static dev.nostal.nostalprotect.utils.RegionUtility.playerCanModifyBlockAtLocation;
 
 public class BucketInteractListener implements Listener {
 
     @EventHandler
     public void onPlayerBucketFill(PlayerBucketFillEvent event) {
-
         Player player = event.getPlayer();
         Material material = event.getBucket();
         String permission = "item." + material.name() + ".fill";
+        Location location = event.getBlock().getLocation();
 
         if (!playerHasPermission(permission, player)) {
             event.setCancelled(true);
         }
 
+        if (!playerCanModifyBlockAtLocation(location, player)) {
+            event.setCancelled(true);
+        }
     }
 
     @EventHandler
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
-
         Player player = event.getPlayer();
         Material bucket = event.getBucket();
         String permission = "item." + bucket.name() + ".empty";
+        Location location = event.getBlock().getLocation();
 
         switch (bucket) {
             case AXOLOTL_BUCKET:
@@ -71,19 +76,25 @@ public class BucketInteractListener implements Listener {
             event.setCancelled(true);
         }
 
+        if (!playerCanModifyBlockAtLocation(location, player)) {
+            event.setCancelled(true);
+        }
     }
 
     @EventHandler
     public void onPlayerBucketCapture(PlayerBucketEntityEvent event) {
-
         Player player = event.getPlayer();
         Material material = event.getOriginalBucket().getType();
         String permission = "item." + material.name() + ".capture";
+        Location location = event.getEntity().getLocation();
 
         if (!playerHasPermission(permission, player)) {
             event.setCancelled(true);
         }
 
+        if (!playerCanModifyBlockAtLocation(location, player)) {
+            event.setCancelled(true);
+        }
     }
 
 }

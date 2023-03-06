@@ -9,7 +9,7 @@ import org.bukkit.permissions.PermissionAttachment;
 import java.util.UUID;
 
 import static dev.nostal.nostalprotect.utils.PermissionUtility.getPlayerDebugMode;
-import static dev.nostal.nostalprotect.utils.PermissionUtility.perms;
+import static dev.nostal.nostalprotect.utils.RegionUtility.perms;
 
 public class JoinListener implements Listener {
 

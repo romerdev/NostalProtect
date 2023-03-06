@@ -25,6 +25,7 @@
 
 package dev.nostal.nostalprotect.listeners.entity;
 
+import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,12 +33,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import static dev.nostal.nostalprotect.utils.PermissionUtility.playerHasPermission;
+import static dev.nostal.nostalprotect.utils.RegionUtility.playerCanModifyBlockAtLocation;
 
 public class EntityDamageListener implements Listener {
 
     @EventHandler
     public void onEntityDamageByPlayer(EntityDamageByEntityEvent event) {
-
         if (!(event.getDamager() instanceof Player)) {
             return;
         }
@@ -45,11 +46,15 @@ public class EntityDamageListener implements Listener {
         Player player = (Player) event.getDamager();
         EntityType entity = event.getEntityType();
         String permission = "entity." + entity.name() + ".damage";
+        Location location = event.getEntity().getLocation();
 
         if (!playerHasPermission(permission, player)) {
             event.setCancelled(true);
         }
 
+        if (!playerCanModifyBlockAtLocation(location, player)) {
+            event.setCancelled(true);
+        }
     }
 
 }

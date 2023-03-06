@@ -25,6 +25,7 @@
 
 package dev.nostal.nostalprotect.listeners.block;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,19 +33,24 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
 import static dev.nostal.nostalprotect.utils.PermissionUtility.playerHasPermission;
+import static dev.nostal.nostalprotect.utils.RegionUtility.playerCanModifyBlockAtLocation;
 
 public class BlockBreakListener implements Listener {
 
     @EventHandler
     public void onPlayerBlockBreak(BlockBreakEvent event) {
-
         Player player = event.getPlayer();
         Material material = event.getBlock().getType();
         String permission = "block." + material.name() + ".break";
+        Location location = event.getBlock().getLocation();
 
         if (!playerHasPermission(permission, player)) {
             event.setCancelled(true);
         }
 
+        if (!playerCanModifyBlockAtLocation(location, player)) {
+            event.setCancelled(true);
+        }
     }
+
 }

@@ -40,7 +40,6 @@ public class BlockInteractListener implements Listener {
 
     @EventHandler
     public void onPlayerBlockInteract(PlayerInteractEvent event) {
-
         if (event.getClickedBlock() == null) {
             return;
         }
@@ -66,6 +65,6 @@ public class BlockInteractListener implements Listener {
         if (!playerCanModifyBlockAtLocation(location, player)) {
             event.setCancelled(true);
         }
-
     }
+
 }

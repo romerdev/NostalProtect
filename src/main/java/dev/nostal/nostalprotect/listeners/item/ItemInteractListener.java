@@ -26,7 +26,6 @@
 package dev.nostal.nostalprotect.listeners.item;
 
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,12 +37,11 @@ public class ItemInteractListener implements Listener {
 
     @EventHandler
     public void onPlayerItemInteract(PlayerInteractEvent event) {
-
         Player player =  event.getPlayer();
         Material material = event.getMaterial();
-        String permission = "item." + material.name() + ".interact";
+        String permission = "item." + material.name() + ".use";
 
-        // Allow interacting with block when player has the placement permission.
+        // Block interacting is handled by the place permission.
         if (event.isBlockInHand()) {
             permission = "block." + material.name() + ".place";
         }
@@ -87,7 +85,6 @@ public class ItemInteractListener implements Listener {
                     player.getInventory().remove(material);
                 }
         }
-
     }
 
 }

@@ -25,6 +25,7 @@
 
 package dev.nostal.nostalprotect.listeners.block;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,16 +33,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import static dev.nostal.nostalprotect.utils.PermissionUtility.playerHasPermission;
+import static dev.nostal.nostalprotect.utils.RegionUtility.playerCanModifyBlockAtLocation;
 
 public class BlockPlaceListener implements Listener {
 
     @EventHandler
     public void onPlayerBlockPlace(BlockPlaceEvent event) {
-
         Player player = event.getPlayer();
         Material material = event.getBlock().getType();
         Material materialToRemove = material;
         String permission = "block." + material.name() + ".place";
+        Location location = event.getBlock().getLocation();
 
         if (material == Material.POWDER_SNOW) {
             materialToRemove = Material.POWDER_SNOW_BUCKET;
@@ -52,5 +54,9 @@ public class BlockPlaceListener implements Listener {
             player.getInventory().remove(materialToRemove);
         }
 
+        if (!playerCanModifyBlockAtLocation(location, player)) {
+            event.setCancelled(true);
+        }
     }
+
 }

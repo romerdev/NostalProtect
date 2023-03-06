@@ -37,7 +37,6 @@ public class ItemPickupListener implements Listener {
 
     @EventHandler
     public void onPlayerItemPickup(EntityPickupItemEvent event) {
-
         if (!(event.getEntity() instanceof Player)) {
             return;
         }
@@ -49,7 +48,6 @@ public class ItemPickupListener implements Listener {
         if (!playerHasPermission(permission, player)) {
             event.setCancelled(true);
         }
-
     }
 
 }

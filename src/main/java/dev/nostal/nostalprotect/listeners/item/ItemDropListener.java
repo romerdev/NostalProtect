@@ -37,7 +37,6 @@ public class ItemDropListener implements Listener {
 
     @EventHandler
     public void onPlayerItemDrop(PlayerDropItemEvent event) {
-
         Player player = event.getPlayer();
         Material material = event.getItemDrop().getItemStack().getType();
         String permission = "item." + material.name() + ".drop";
@@ -45,6 +44,6 @@ public class ItemDropListener implements Listener {
         if (!playerHasPermission(permission, player)) {
             event.setCancelled(true);
         }
-
     }
+
 }
