@@ -1,8 +1,7 @@
 /*
- * This file is part of NostalProtect, licensed under the MIT License.
+ *  This file is part of NostalProtect, licensed under the MIT License.
  *
- *  Copyright (c) Meffu (Romer) <romer@nostal.dev>
- *  Copyright (c) contributors
+ *  Copyright (c) 2023 romerdev (Romer)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +21,6 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  *  SOFTWARE.
  */
-
 package dev.nostal.nostalprotect.utils;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
