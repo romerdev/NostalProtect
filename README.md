@@ -2,9 +2,11 @@
 
  Instantly protect your Minecraft world with easy to use permissions! Such as:
  
- - np.block.STONE.place
- - np.item.GRASS.pickup
- - np.entity.ARMOR_STAND.interact
+ - `np.block.STONE.place`
+ - `np.item.GRASS.pickup`
+ - `np.entity.ARMOR_STAND.interact`
+ 
+ And with the [Worldguard integration](https://github.com/romerdev/NostalProtect#worldguard-region-integration) you could even specify the region.
 
 
 ## Installation
