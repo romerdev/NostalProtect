@@ -20,7 +20,7 @@ Now you can give groups or players the permissions you want.
 
 ## Permission usage
 
-- Block place: np.block.<material>.place
+- Block place: `np.block.<material>.place`
 - Block break: np.block.<material>.remove
 - Block interact: np.block.<material>.interact
 - Entity spawn: np.entity.<type>.place
