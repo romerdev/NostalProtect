@@ -18,24 +18,9 @@ Now you can give groups or players the permissions you want.
 
 ## Permission usage
 
-- Block place: `np.block.<material>.place`
-- Block break: `np.block.<material>.break`
-- Block interact: `np.block.<material>.interact`
-- Entity spawn: `np.entity.<type>.place`
-- Entity break: `np.entity.<type>.break`
-- Entity interact: `np.entity.<type>.interact`
-- Entity damage: `np.entity.<type>.damage`
-- Item use: `np.item.<material>.use`
-- Item drop: `np.item.<material>.drop`
-- Item pickup: `np.item.<material>.pickup`
-
-Visit the [Permissions page](https://github.com/romerdev/NostalProtect/wiki/Permissions) in the Wiki for more specific permissions such as `np.entity.ITEM_FRAME.rotate` and for combined permissions such as `np.block.STONE.build` for both breaking and placing.
+Visit the [Permissions page](https://github.com/romerdev/NostalProtect/wiki/Permissions) in the Wiki for a full list of available permissions.
 
 
- ## WorldGuard Region integration
+## WorldGuard Region integration
  
  I'm currently adding a [Worldguard integration](https://github.com/romerdev/NostalProtect/wiki/WorldGuard-integration) that will allow region based protection permissions:
- 
- - `np.<type>.<material>.<action>.own`: Allow this action on regions where the player is a member or owner.
- - `np.<type>.<material>.<action>.global`: Allow this action on global region.
- - `np.<type>.<material>.<action>.<region>`: Allow this action on a specific region (this will bypass region owner- or membership for this player).
