@@ -29,7 +29,7 @@ Now you can give groups or players the permissions you want.
 - Item drop: `np.item.<material>.drop`
 - Item pickup: `np.item.<material>.pickup`
 
-Visit the [Permissions page](https://github.com/romerdev/NostalProtect/wiki/Permissions) in the Wiki for more specific permissions such as `np.entity.ITEM_FRAME.rotate` and for combined permissions such as `np.entity.ITEM_FRAME.build` for both breaking and placing.
+Visit the [Permissions page](https://github.com/romerdev/NostalProtect/wiki/Permissions) in the Wiki for more specific permissions such as `np.entity.ITEM_FRAME.rotate` and for combined permissions such as `np.block.STONE.build` for both breaking and placing.
 
 
  ## WorldGuard Region integration
