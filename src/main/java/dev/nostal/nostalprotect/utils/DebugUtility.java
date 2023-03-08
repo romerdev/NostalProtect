@@ -24,14 +24,11 @@
 
 package dev.nostal.nostalprotect.utils;
 
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.entity.Player;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class PermissionUtility {
+public class DebugUtility {
 
     private static final Map<UUID, Boolean> playerDebugMode = new HashMap<>();
 
@@ -41,14 +38,6 @@ public class PermissionUtility {
 
     public static Map<UUID, Boolean> getPlayerDebugMode() {
         return playerDebugMode;
-    }
-
-    public static boolean playerHasPermission(String permission, Player player) {
-        if (playerDebugMode(player.getUniqueId())) {
-            player.sendMessage(MiniMessage.miniMessage().deserialize("<#008BF8>[DEBUG]<#BEBFC5> Need permission <#008BF8>np." + permission + "<#BEBFC5> for this action."));
-        }
-
-        return (player.hasPermission("np." + permission) || player.hasPermission("np.bypass"));
     }
 
 }

@@ -24,13 +24,14 @@
 
 package dev.nostal.nostalprotect.listeners.item;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
-import static dev.nostal.nostalprotect.utils.PermissionUtility.playerHasPermission;
+import static dev.nostal.nostalprotect.utils.PlayerActionUtility.playerCanPerformAction;
 
 public class ItemDropListener implements Listener {
 
@@ -39,8 +40,9 @@ public class ItemDropListener implements Listener {
         Player player = event.getPlayer();
         Material material = event.getItemDrop().getItemStack().getType();
         String permission = "item." + material.name() + ".drop";
+        Location location = event.getItemDrop().getLocation();
 
-        if (!playerHasPermission(permission, player)) {
+        if (!playerCanPerformAction(player, permission, location, material, false)) {
             event.setCancelled(true);
         }
     }

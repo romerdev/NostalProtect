@@ -1,12 +1,37 @@
+/*
+ *  This file is part of NostalProtect, licensed under the MIT License.
+ *
+ *  Copyright (c) 2023 romerdev (Romer)
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in all
+ *  copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ *  SOFTWARE.
+ */
+
 package dev.nostal.nostalprotect.utils;
 
 import dev.nostal.nostalprotect.NostalProtect;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import static dev.nostal.nostalprotect.utils.PermissionUtility.playerHasPermission;
+import static dev.nostal.nostalprotect.utils.DebugUtility.playerDebugMode;
 import static dev.nostal.nostalprotect.utils.RegionUtility.playerCanModifyBlockAtLocation;
 
 public class PlayerActionUtility {
@@ -14,19 +39,23 @@ public class PlayerActionUtility {
     private static final JavaPlugin plugin = NostalProtect.getPlugin(NostalProtect.class);
 
     public static boolean playerCanPerformAction(Player player, String permission, Location location, Material material, Boolean removeItem) {
-        if (!playerHasPermission(permission, player)) {
-            if (plugin.getConfig().getBoolean("removeDisallowedItems") && removeItem) {
-                player.getInventory().remove(material);
+        if (plugin.getConfig().getBoolean("useWorldGuardRegions")) {
+            if (!playerCanModifyBlockAtLocation(location, player, permission)) {
+                if (plugin.getConfig().getBoolean("removeDisallowedItems") && removeItem) {
+                    player.getInventory().remove(material);
+                }
+
+                return false;
             }
 
-            return false;
+            return true;
         }
 
-        if (plugin.getConfig().getBoolean("useWorldGuardRegions") && !playerCanModifyBlockAtLocation(location, player)) {
-            return false;
+        if (playerDebugMode(player.getUniqueId())) {
+            player.sendMessage(MiniMessage.miniMessage().deserialize("<#008BF8>[DEBUG]<#BEBFC5> Need permission <#008BF8>np." + permission + "<#BEBFC5> for this action."));
         }
 
-        return true;
+        return (player.hasPermission("np." + permission) || player.hasPermission("np.bypass"));
     }
 
 }

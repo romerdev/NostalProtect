@@ -33,7 +33,7 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-import static dev.nostal.nostalprotect.utils.PermissionUtility.getPlayerDebugMode;
+import static dev.nostal.nostalprotect.utils.DebugUtility.getPlayerDebugMode;
 
 public class DebugCommand implements CommandExecutor {
 
