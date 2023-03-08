@@ -55,10 +55,11 @@ public class RegionUtility {
 
         if (player.hasPermission("np.bypass.region")) {
             if (playerDebugMode(playerUuid)) {
-                player.sendMessage(MiniMessage.miniMessage().deserialize("<#008BF8>[DEBUG]<#BEBFC5> Allowed because you can bypass region member- or ownership."));
+                player.sendMessage(MiniMessage.miniMessage().deserialize("<#008BF8>[REGION DEBUG]<#BEBFC5> Allowed because you can bypass regions."));
+                player.sendMessage(MiniMessage.miniMessage().deserialize("<#008BF8>[DEBUG]<#BEBFC5> Need permission <#008BF8>" + permission + "<#BEBFC5> for this action."));
             }
 
-            return true;
+            return (player.hasPermission(permission) || player.hasPermission("np.bypass"));
         }
         
         boolean isInOthersRegion = false;
