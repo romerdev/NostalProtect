@@ -33,16 +33,13 @@ import com.sk89q.worldguard.protection.regions.RegionQuery;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.PermissionAttachment;
 
-import java.util.HashMap;
 import java.util.UUID;
 
-import static dev.nostal.nostalprotect.utils.DebugUtility.*;
+import static dev.nostal.nostalprotect.utils.DebugUtility.playerDebugMode;
 
 public class RegionUtility {
 
-    public static final HashMap<UUID, PermissionAttachment> perms = new HashMap<UUID, PermissionAttachment>();
     private final static RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
 
     public static boolean playerCanModifyBlockAtLocation(Location location, Player player, String permission) {
