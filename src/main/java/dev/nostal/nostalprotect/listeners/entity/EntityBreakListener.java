@@ -44,7 +44,7 @@ public class EntityBreakListener implements Listener {
 
         Player player = (Player) event.getRemover();
         EntityType entity = event.getEntity().getType();
-        String permission = "entity." + entity.name() + ".break";
+        String[] permission = {"entity", entity.name(), "break"};
         Location location = event.getEntity().getLocation();
         Material materialToRemove = player.getActiveItem().getType();
 

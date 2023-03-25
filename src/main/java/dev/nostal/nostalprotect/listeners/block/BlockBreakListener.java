@@ -39,7 +39,7 @@ public class BlockBreakListener implements Listener {
     public void onPlayerBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
         Material material = event.getBlock().getType();
-        String permission = "block." + material.name() + ".break";
+        String[] permission = {"block", material.name(), "break"};
         Location location = event.getBlock().getLocation();
 
         if (!playerCanPerformAction(player, permission, location, material, false)) {

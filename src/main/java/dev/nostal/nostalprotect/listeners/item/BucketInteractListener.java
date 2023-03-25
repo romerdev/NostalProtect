@@ -41,7 +41,7 @@ public class BucketInteractListener implements Listener {
     public void onPlayerBucketFill(PlayerBucketFillEvent event) {
         Player player = event.getPlayer();
         Material bucket = event.getBucket();
-        String permission = "item." + bucket.name() + ".fill";
+        String[] permission = {"item", bucket.name(), "fill"};
         Location location = event.getBlock().getLocation();
 
         if (!playerCanPerformAction(player, permission, location, bucket, true)) {
@@ -53,7 +53,7 @@ public class BucketInteractListener implements Listener {
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
         Player player = event.getPlayer();
         Material bucket = event.getBucket();
-        String permission = "item." + bucket.name() + ".empty";
+        String[] permission = {"item", bucket.name(), "empty"};
         Location location = event.getBlock().getLocation();
 
         switch (bucket) {
@@ -63,7 +63,7 @@ public class BucketInteractListener implements Listener {
             case SALMON_BUCKET:
             case TADPOLE_BUCKET:
             case TROPICAL_FISH_BUCKET:
-                permission = "item." + bucket.name() + ".release";
+                permission[2] = "release";
         }
 
         if (!playerCanPerformAction(player, permission, location, bucket, true)) {
@@ -75,7 +75,7 @@ public class BucketInteractListener implements Listener {
     public void onPlayerBucketCapture(PlayerBucketEntityEvent event) {
         Player player = event.getPlayer();
         Material bucket = event.getOriginalBucket().getType();
-        String permission = "item." + bucket.name() + ".capture";
+        String[] permission = {"item", bucket.name(), "capture"};
         Location location = event.getEntity().getLocation();
 
         if (!playerCanPerformAction(player, permission, location, bucket, true)) {

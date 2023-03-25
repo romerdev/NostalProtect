@@ -44,7 +44,7 @@ public class EntityDamageListener implements Listener {
 
         Player player = (Player) event.getDamager();
         EntityType entity = event.getEntityType();
-        String permission = "entity." + entity.name() + ".damage";
+        String[] permission = {"entity", entity.name(), "damage"};
         Location location = event.getEntity().getLocation();
         Material materialToRemove = player.getActiveItem().getType();
 

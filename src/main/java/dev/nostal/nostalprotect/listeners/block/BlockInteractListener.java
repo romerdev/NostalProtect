@@ -51,7 +51,7 @@ public class BlockInteractListener implements Listener {
 
         Player player = event.getPlayer();
         Material material = event.getClickedBlock().getType();
-        String permission = "block." + material.name() + ".interact";
+        String[] permission = {"block", material.name(), "interact"};
         Location location = event.getClickedBlock().getLocation();
 
         // Excluding block interacting for stairs & fences.

@@ -43,7 +43,7 @@ public class ItemPickupListener implements Listener {
 
         Player player = (Player) event.getEntity();
         Material material = event.getItem().getItemStack().getType();
-        String permission = "item." + material.name() + ".pickup";
+        String[] permission = {"item", material.name(), "pickup"};
         Location location = event.getItem().getLocation();
 
         if (!playerCanPerformAction(player, permission, location, material, false)) {

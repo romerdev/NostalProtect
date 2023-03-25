@@ -41,15 +41,14 @@ public class EntityInteractListener implements Listener {
         Player player = event.getPlayer();
         Entity entity = event.getRightClicked();
         EntityType entityType = event.getRightClicked().getType();
-        String permission = "entity." + entityType.name() + ".interact";
+        String[] permission = {"entity", entityType.name(), "interact"};
         Location location = event.getRightClicked().getLocation();
         Material materialToRemove = player.getActiveItem().getType();
 
         // ItemFrame rotate event
         if (entity instanceof ItemFrame && !((ItemFrame)event.getRightClicked()).getItem().getType().equals(Material.AIR)){
-            permission = "entity." + entityType.name() + ".rotate";
+            permission[2] = "rotate";
         }
-
 
         if (!playerCanPerformAction(player, permission, location, materialToRemove, false)) {
             event.setCancelled(true);
@@ -60,7 +59,7 @@ public class EntityInteractListener implements Listener {
     public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent event) {
         Player player = event.getPlayer();
         EntityType entityType = event.getRightClicked().getType();
-        String permission = "entity." + entityType.name() + ".interact";
+        String[] permission = {"entity", entityType.name(), "interact"};
         Location location = event.getRightClicked().getLocation();
         Material materialToRemove = player.getActiveItem().getType();
 

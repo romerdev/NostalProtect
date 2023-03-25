@@ -39,9 +39,13 @@ public class BlockPlaceListener implements Listener {
     public void onPlayerBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
         Material material = event.getBlock().getType();
-        String permission = "block." + material.name() + ".place";
+        String[] permission = {"block", material.name(), "place"};
         Location location = event.getBlock().getLocation();
         Material materialToRemove = material;
+
+        if (event.getBlockAgainst().getType() == Material.AIR) {
+            return;
+        }
 
         if (material == Material.POWDER_SNOW) {
             materialToRemove = Material.POWDER_SNOW_BUCKET;

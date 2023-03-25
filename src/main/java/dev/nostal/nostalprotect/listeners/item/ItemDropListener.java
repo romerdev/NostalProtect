@@ -39,7 +39,7 @@ public class ItemDropListener implements Listener {
     public void onPlayerItemDrop(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
         Material material = event.getItemDrop().getItemStack().getType();
-        String permission = "item." + material.name() + ".drop";
+        String[] permission = {"item", material.name(), "drop"};
         Location location = event.getItemDrop().getLocation();
 
         if (!playerCanPerformAction(player, permission, location, material, false)) {

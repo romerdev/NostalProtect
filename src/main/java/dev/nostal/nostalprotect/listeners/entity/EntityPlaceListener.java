@@ -45,7 +45,7 @@ public class EntityPlaceListener implements Listener {
 
         Player player = event.getPlayer();
         EntityType entity = event.getEntityType();
-        String permission = "entity." + entity.name() + ".place";
+        String[] permission = {"entity", entity.name(), "place"};
         Location location = event.getBlock().getLocation();
         Material materialToRemove = event.getPlayer().getActiveItem().getType();
 
@@ -62,7 +62,7 @@ public class EntityPlaceListener implements Listener {
 
         Player player = event.getPlayer();
         EntityType entity = event.getEntity().getType();
-        String permission = "entity." + entity.name() + ".place";
+        String[] permission = {"entity", entity.name(), "place"};
         Location location = event.getBlock().getLocation();
         Material materialToRemove = event.getItemStack().getType();
 

@@ -39,11 +39,10 @@ public class ItemInteractListener implements Listener {
     public void onPlayerItemInteract(PlayerInteractEvent event) {
         Player player =  event.getPlayer();
         Material material = event.getMaterial();
-        String permission = "item." + material.name() + ".use";
+        String[] permission = {"item", material.name(), "use"};
 
-        // Block interacting is handled by the place permission.
         if (event.isBlockInHand()) {
-            permission = "block." + material.name() + ".place";
+            return;
         }
 
         switch (material) {

@@ -24,38 +24,77 @@
 
 package dev.nostal.nostalprotect.utils;
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
+import com.sk89q.worldguard.protection.regions.RegionQuery;
 import dev.nostal.nostalprotect.NostalProtect;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import static dev.nostal.nostalprotect.utils.DebugUtility.playerDebugMode;
-import static dev.nostal.nostalprotect.utils.RegionUtility.playerCanModifyBlockAtLocation;
+import java.util.UUID;
 
 public class PlayerActionUtility {
-
     private static final JavaPlugin plugin = NostalProtect.getPlugin(NostalProtect.class);
 
-    public static boolean playerCanPerformAction(Player player, String permission, Location location, Material material, Boolean removeItem) {
+    public static boolean playerCanPerformAction(Player player, String[] permission, Location location, Material material, boolean removeItem) {
         if (plugin.getConfig().getBoolean("useWorldGuardRegions")) {
             if (!playerCanModifyBlockAtLocation(location, player, permission)) {
-                if (plugin.getConfig().getBoolean("removeDisallowedItems") && removeItem) {
-                    player.getInventory().remove(material);
-                }
-
+                removeItemFromInventory(removeItem, player, material);
                 return false;
             }
-
             return true;
+        } else if (!playerHasPermission(player, permission)) {
+            removeItemFromInventory(removeItem, player, material);
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean playerHasPermission(Player player, String[] permission) {
+        String basePermission = "np." + permission[0] + ".";
+        String materialFirstPermission = basePermission + permission[1] + "." + permission[2];
+        String actionFirstPermission = basePermission + permission[2] + "." + permission[1];
+
+        return (player.hasPermission(materialFirstPermission) || player.hasPermission(actionFirstPermission) || player.hasPermission("np.bypass"));
+    }
+
+    private static boolean playerCanModifyBlockAtLocation(Location location, Player player, String[] permission) {
+        RegionContainer regionContainer = WorldGuard.getInstance().getPlatform().getRegionContainer();
+        RegionQuery regionQuery = regionContainer.createQuery();
+        ApplicableRegionSet applicableRegions = regionQuery.getApplicableRegions(BukkitAdapter.adapt(location));
+        UUID playerUuid = player.getUniqueId();
+        String basePermission = "np." + permission[0] + ".";
+        String materialFirstPermission = basePermission + permission[1] + "." + permission[2];
+        String actionFirstPermission = basePermission + permission[2] + "." + permission[1];
+
+        if (player.hasPermission("np.bypass.region")) {
+            return playerHasPermission(player, permission);
         }
 
-        if (playerDebugMode(player.getUniqueId())) {
-            player.sendMessage(MiniMessage.miniMessage().deserialize("<#008BF8>[DEBUG]<#BEBFC5> Need permission <#008BF8>np." + permission + "<#BEBFC5> for this action."));
+        for (ProtectedRegion region : applicableRegions) {
+            if (region.getMembers().contains(playerUuid) || region.getOwners().contains(playerUuid)) {
+                if (playerHasPermission(player, permission)) {
+                    return true;
+                } else if (player.hasPermission(materialFirstPermission + "." + region.getId()) || player.hasPermission(actionFirstPermission + "." + region.getId())) {
+                    return true;
+                }
+            }
         }
 
-        return (player.hasPermission("np." + permission) || player.hasPermission("np.bypass"));
+        return (player.hasPermission(materialFirstPermission + ".global") || player.hasPermission(actionFirstPermission + ".global"));
+    }
+
+    private static void removeItemFromInventory(boolean removeItem, Player player, Material material) {
+        if (!removeItem || !plugin.getConfig().getBoolean("removeDisallowedItems")) {
+            return;
+        }
+
+        player.getInventory().remove(material);
     }
 
 }
