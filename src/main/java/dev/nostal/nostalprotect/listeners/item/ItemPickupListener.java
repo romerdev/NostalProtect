@@ -24,12 +24,14 @@
 
 package dev.nostal.nostalprotect.listeners.item;
 
+import com.destroystokyo.paper.event.player.PlayerPickupExperienceEvent;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.player.PlayerPickupArrowEvent;
 
 import static dev.nostal.nostalprotect.utils.PlayerActionUtility.playerCanPerformAction;
 
@@ -47,6 +49,31 @@ public class ItemPickupListener implements Listener {
         Location location = event.getItem().getLocation();
 
         if (!playerCanPerformAction(player, permission, location, material, false)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerArrowPickup(PlayerPickupArrowEvent event) {
+        Player player = event.getPlayer();
+        Material material = event.getItem().getItemStack().getType();
+        String[] permission = {"item", material.name(), "pickup"};
+        Location location = event.getItem().getLocation();
+
+        if (!playerCanPerformAction(player, permission, location, material, false)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerExperiencePickup(PlayerPickupExperienceEvent event) {
+        Player player = event.getPlayer();
+        Material material = Material.EXPERIENCE_BOTTLE;
+        String[] permission = {"item", material.name(), "pickup"};
+        Location location = event.getExperienceOrb().getLocation();
+
+        if (!playerCanPerformAction(player, permission, location, material, false)) {
+            event.getExperienceOrb().remove();
             event.setCancelled(true);
         }
     }
