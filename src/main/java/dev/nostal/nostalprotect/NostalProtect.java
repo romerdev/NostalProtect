@@ -24,6 +24,8 @@
 
 package dev.nostal.nostalprotect;
 
+import dev.nostal.nostalprotect.commands.DebugCommand;
+import dev.nostal.nostalprotect.listeners.JoinListener;
 import dev.nostal.nostalprotect.listeners.block.BlockBreakListener;
 import dev.nostal.nostalprotect.listeners.block.BlockInteractListener;
 import dev.nostal.nostalprotect.listeners.block.BlockPlaceListener;
@@ -39,12 +41,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
+
 import static dev.nostal.nostalprotect.utils.ConfigUtility.initConfig;
 
 public final class NostalProtect extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        Objects.requireNonNull(this.getCommand("npdebug")).setExecutor(new DebugCommand());
         registerListeners();
         initConfig();
     }
@@ -66,6 +71,8 @@ public final class NostalProtect extends JavaPlugin {
         pluginManager.registerEvents(new ItemPickupListener(), this);
 
         pluginManager.registerEvents(new BucketInteractListener(), this);
+
+        pluginManager.registerEvents(new JoinListener(), this);
     }
 
 }

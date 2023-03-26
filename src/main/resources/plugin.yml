@@ -4,4 +4,8 @@ main: dev.nostal.nostalprotect.NostalProtect
 api-version: 1.19
 authors: [ Meffu ]
 description: Protect your world with easy to use permissions
+commands:
+  npdebug:
+    description: Toggle the debug mode of NostalProtect.
+    usage: /<command>
 depend: [WorldGuard]

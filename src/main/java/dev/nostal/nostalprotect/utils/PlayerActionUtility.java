@@ -38,6 +38,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.UUID;
 
+import static dev.nostal.nostalprotect.utils.DebugUtility.sendDebugMessage;
+
 public class PlayerActionUtility {
     private static final JavaPlugin plugin = NostalProtect.getPlugin(NostalProtect.class);
 
@@ -48,17 +50,21 @@ public class PlayerActionUtility {
                 return false;
             }
             return true;
-        } else if (!playerHasPermission(player, permission)) {
+        } else if (!playerHasPermission(player, permission, true)) {
             removeItemFromInventory(removeItem, player, material);
             return false;
         }
         return true;
     }
 
-    private static boolean playerHasPermission(Player player, String[] permission) {
+    private static boolean playerHasPermission(Player player, String[] permission, boolean sendDebugMessage) {
         String basePermission = "np." + permission[0] + ".";
         String materialFirstPermission = basePermission + permission[1] + "." + permission[2];
         String actionFirstPermission = basePermission + permission[2] + "." + permission[1];
+
+        if (sendDebugMessage) {
+            sendDebugMessage(player, "Need permission <#008BF8>" + materialFirstPermission + "<#BEBFC5> for this action.");
+        }
 
         return (player.hasPermission(materialFirstPermission) || player.hasPermission(actionFirstPermission) || player.hasPermission("np.bypass"));
     }
@@ -73,19 +79,23 @@ public class PlayerActionUtility {
         String actionFirstPermission = basePermission + permission[2] + "." + permission[1];
 
         if (player.hasPermission("np.bypass.region")) {
-            return playerHasPermission(player, permission);
+            sendDebugMessage(player, "Bypassed region checking with <#008BF8>np.bypass.region<#BEBFC5>.");
+            return playerHasPermission(player, permission, true);
         }
 
         for (ProtectedRegion region : applicableRegions) {
+            sendDebugMessage(player, "Need to be a member of this region and need the permission <#008BF8>" + materialFirstPermission + "<#BEBFC5> or <#008BF8>" + materialFirstPermission + "." + region.getId() + "<#BEBFC5> for this action.");
+
             if (region.getMembers().contains(playerUuid) || region.getOwners().contains(playerUuid)) {
-                if (playerHasPermission(player, permission)) {
+                if (playerHasPermission(player, permission, false)) {
                     return true;
-                } else if (player.hasPermission(materialFirstPermission + "." + region.getId()) || player.hasPermission(actionFirstPermission + "." + region.getId())) {
-                    return true;
-                }
+                } else return player.hasPermission(materialFirstPermission + "." + region.getId()) || player.hasPermission(actionFirstPermission + "." + region.getId());
             }
+
+            return false;
         }
 
+        sendDebugMessage(player, "Need permission <#008BF8>" + materialFirstPermission + ".global<#BEBFC5> for this action.");
         return (player.hasPermission(materialFirstPermission + ".global") || player.hasPermission(actionFirstPermission + ".global"));
     }
 

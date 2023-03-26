@@ -22,33 +22,30 @@
  *  SOFTWARE.
  */
 
-package dev.nostal.nostalprotect.listeners.block;
+package dev.nostal.nostalprotect.utils;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPlaceEvent;
 
-import static dev.nostal.nostalprotect.utils.PlayerActionUtility.playerCanPerformAction;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
-public class BlockPlaceListener implements Listener {
+public class DebugUtility {
 
-    @EventHandler
-    public void onPlayerBlockPlace(BlockPlaceEvent event) {
-        Player player = event.getPlayer();
-        Material material = event.getBlock().getType();
-        String[] permission = {"block", material.name(), "place"};
-        Location location = event.getBlock().getLocation();
-        Material materialToRemove = material;
+    private static final Map<UUID, Boolean> playerDebugMode = new HashMap<>();
 
-        if (material == Material.POWDER_SNOW) {
-            materialToRemove = Material.POWDER_SNOW_BUCKET;
-        }
+    public static boolean playerDebugMode(UUID uuid) {
+        return playerDebugMode.getOrDefault(uuid, false);
+    }
 
-        if (!playerCanPerformAction(player, permission, location, materialToRemove, true)) {
-            event.setCancelled(true);
+    public static Map<UUID, Boolean> getPlayerDebugMode() {
+        return playerDebugMode;
+    }
+
+    public static void sendDebugMessage(Player player, String message) {
+        if (playerDebugMode(player.getUniqueId())) {
+            player.sendMessage(MiniMessage.miniMessage().deserialize("<#008BF8>[DEBUG] <#BEBFC5>" + message));
         }
     }
 

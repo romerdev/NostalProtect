@@ -22,34 +22,22 @@
  *  SOFTWARE.
  */
 
-package dev.nostal.nostalprotect.listeners.block;
+package dev.nostal.nostalprotect.listeners;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
-import static dev.nostal.nostalprotect.utils.PlayerActionUtility.playerCanPerformAction;
+import java.util.UUID;
 
-public class BlockPlaceListener implements Listener {
+import static dev.nostal.nostalprotect.utils.DebugUtility.getPlayerDebugMode;
+
+public class JoinListener implements Listener {
 
     @EventHandler
-    public void onPlayerBlockPlace(BlockPlaceEvent event) {
-        Player player = event.getPlayer();
-        Material material = event.getBlock().getType();
-        String[] permission = {"block", material.name(), "place"};
-        Location location = event.getBlock().getLocation();
-        Material materialToRemove = material;
-
-        if (material == Material.POWDER_SNOW) {
-            materialToRemove = Material.POWDER_SNOW_BUCKET;
-        }
-
-        if (!playerCanPerformAction(player, permission, location, materialToRemove, true)) {
-            event.setCancelled(true);
-        }
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        UUID uuid = event.getPlayer().getUniqueId();
+        getPlayerDebugMode().put(uuid, false);
     }
 
 }

@@ -54,8 +54,8 @@ public class BlockInteractListener implements Listener {
         String[] permission = {"block", material.name(), "interact"};
         Location location = event.getClickedBlock().getLocation();
 
-        // Excluding block interacting for stairs & fences.
-        if (material.name().endsWith("STAIRS") || material.name().endsWith("FENCE")) {
+        // Excluding block interacting for stairs, fences & redstone wire.
+        if (material.name().endsWith("STAIRS") || material.name().endsWith("FENCE") || material == Material.REDSTONE_WIRE) {
             return;
         }
 
