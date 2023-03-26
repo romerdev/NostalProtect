@@ -7,5 +7,6 @@ description: Protect your world with easy to use permissions
 commands:
   npdebug:
     description: Toggle the debug mode of NostalProtect.
+    permission: np.debug
     usage: /<command>
-depend: [WorldGuard]
+softdepend: [WorldGuard]

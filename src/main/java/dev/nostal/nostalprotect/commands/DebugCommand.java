@@ -45,13 +45,17 @@ public class DebugCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!(sender instanceof Player)) {
-            Component component = miniMessage.deserialize("<#008BF8>[NostalProtect v1.0]<#BEBFC5> this command can only be executed by players.");
-            sender.sendMessage(component);
+            sender.sendMessage(miniMessage.deserialize("<#008BF8>[NostalProtect v1.0]<#BEBFC5> This command can only be executed by players."));
             return false;
         }
 
         Player player = (Player) sender;
         UUID uuid = player.getUniqueId();
+
+        if (!player.hasPermission("np.debug")) {
+            sender.sendMessage(miniMessage.deserialize("<#008BF8>[NostalProtect v1.0]<#BEBFC5> You don't have the right permission for this command."));
+            return false;
+        }
 
         playerDebugMode.put(uuid, !playerDebugMode.get(uuid));
         Component toggleDebugMessage = miniMessage.deserialize("<#008BF8>[NostalProtect v1.0]<#BEBFC5> Debug mode has been " + (playerDebugMode.get(uuid) ? "turned on." : "turned off."));
